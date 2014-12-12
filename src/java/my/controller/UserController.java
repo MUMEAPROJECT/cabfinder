@@ -20,6 +20,8 @@ import javax.inject.Named;
 public class UserController {
     
     private CabUser user;
+    private String testString;
+    
     @EJB
     private UserFacadeLocal ufacade;
     
