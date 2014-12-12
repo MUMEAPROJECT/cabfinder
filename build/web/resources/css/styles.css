@@ -248,6 +248,9 @@ table > thead > tr > th{
     bottom: 5px;
     padding: 5px;
 }
-tr > td > input[type='text'], input[type='password']{
+tr > td > input[type='text'], tr > td > input[type='password']{
     width: 160px;
+}
+.footer{
+    text-align: center;
 }
