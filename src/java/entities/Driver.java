@@ -15,12 +15,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author PTamang
  */
 @Entity
+@NamedQuery(name = "checkCredentials", query = "Select d from Driver d where d.username=:user And d.password=:pass")
 public class Driver implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

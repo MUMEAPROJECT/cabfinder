@@ -227,8 +227,8 @@ public class MapController {
         marker.setLongitude(longitude);
         marker.setAttributes(attributes);
         //marker.setDraggable(true);
-        marker.setImage("resources/img/taxi.png");
-        marker.setHeight(25);
+        marker.setImage("../resources/img/taxi_placemark.png");
+        marker.setHeight(30);
         marker.setWidth(25);
         
         return marker;

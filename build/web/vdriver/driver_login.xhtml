@@ -8,7 +8,8 @@
         <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
     </h:head>
     <h:body>
-        <h:form styleClass="header">
+        
+        <h:form id="login" styleClass="header">
             <p:outputLabel styleClass="title">
                 <h:panelGroup>
                     <h:graphicImage id="driver" style="header-img" alt="Driver Icon" library="img" url="../resources/img/driver.png" width="25" title="Click to Login as Driver"></h:graphicImage>
@@ -18,13 +19,14 @@
             </p:outputLabel>
             <hr />
             <p:panel>
+                <h:messages style="color:red;margin:8px;" />
                 <h:outputLabel>Username: </h:outputLabel>
-                <h:inputText value="" required="true"/>
+                <h:inputText id="username" value="#{driverController.username}" required="true"/>
                 <h:outputLabel>Password: &nbsp;</h:outputLabel>
-                <h:inputSecret value="" required="true"/>
+                <h:inputSecret value="#{driverController.password}" required="true"/>
             </p:panel>
 
-            <h:commandButton styleClass="bold" value=" Login " action="#{driverController.signUp}"/>
+            <h:commandButton styleClass="bold" value=" Login " action="#{driverController.checkCredentials}"/>
             <h:commandButton styleClass="bold" value=" Cancel " action="index"/>
             <h:link styleClass="signup" value=" Sign Up " outcome="driver_signup"/>
         </h:form>

@@ -8,6 +8,8 @@ package boundary;
 import entities.Driver;
 import java.util.List;
 import javax.ejb.Local;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 
 /**
  *
@@ -29,5 +31,7 @@ public interface DriverFacadeLocal {
     List<Driver> findRange(int[] range);
 
     int count();
+    
+    Driver checkCredential(String username, String password) throws NoResultException,NonUniqueResultException;
     
 }

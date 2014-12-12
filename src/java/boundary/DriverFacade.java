@@ -8,6 +8,8 @@ package boundary;
 import entities.Driver;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -26,6 +28,15 @@ public class DriverFacade extends AbstractFacade<Driver> implements DriverFacade
 
     public DriverFacade() {
         super(Driver.class);
+    }
+
+    @Override
+    public Driver checkCredential(String username, String password) throws NoResultException, NonUniqueResultException {
+       Object d =  em.createNamedQuery("checkCredentials").setParameter("user", username).setParameter("pass", password).getSingleResult();
+       if(d != null){
+           return (Driver) d;
+       }
+        return null;
     }
     
 }
