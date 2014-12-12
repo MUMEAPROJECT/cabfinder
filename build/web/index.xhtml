@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="template/login.xhtml">
+        <ui:define name="title">Cab Finder - Login Page</ui:define>
+    </ui:composition>
+
+    <h:form styleClass="header">
+        <h:link outcome="vdriver/driver_login">
+            <h:graphicImage id="driver" style="header-img" alt="Driver Icon" library="img" url="resources/img/driver.png" width="200" title="Click to Login as Driver"></h:graphicImage>
+        </h:link>
+        <h:link outcome="vuser/user_login">
+            <h:graphicImage style="header-img" alt="User Icon" library="img" url="resources/img/taxi_passenger.png" width="200" title="Click to Login as Passenger"></h:graphicImage>
+        </h:link>
+    </h:form>
+
+</html>
+

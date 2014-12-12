@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title> Cab Finder - Passenger Sign Up </title>
+        <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:panel>
+                <h:outputLabel><h:head> Passenger Details </h:head></h:outputLabel>
+                <hr/>
+                <h:outputLabel>Name: </h:outputLabel>
+                <h:inputText value=""  required="true"/>
+                <h:outputLabel>Phone: </h:outputLabel>
+                <h:inputText value=""  required="false"/>
+                <h:outputLabel>Address: </h:outputLabel>
+                <h:inputText value="" required="true"/>
+                <h:outputLabel>Avatar: </h:outputLabel>
+                <h:inputText value="" required="false"/>
+                <h:outputLabel>Username: </h:outputLabel>
+                <h:inputText value=""  required="true"/>
+                <h:outputLabel>Password: </h:outputLabel>
+                <h:inputSecret value="" required="true"/>
+                <h:outputLabel>Re-type Password: </h:outputLabel>
+                <h:inputSecret value="" required="true" />
+            </p:panel>
+
+            <h:commandButton styleClass="bold" value=" Sign Up " action="#{userController.checkCredentials}"/>
+            <h:commandButton styleClass="bold" value=" Cancel " action="index"/>
+        </h:form>
+    </h:body>
+</html>
+
