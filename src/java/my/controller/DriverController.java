@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.TransactionAttribute;
 import javax.faces.application.ConfigurableNavigationHandler;
@@ -61,6 +64,7 @@ public class DriverController implements Serializable {
     @TransactionAttribute
     public void addLocation() {
         //System.out.println(location.getLat() + " - " + location.getLon());
+        location.setTimeStamp(new Date());
         driver.getLocation().add(location);
         dfacade.edit(driver); // update
     }
@@ -114,6 +118,9 @@ public class DriverController implements Serializable {
     public String checkCredentials() {
         try {
             driver = dfacade.checkCredential(username, password);
+            List<Location> locationList;
+            locationList = driver.getLocation();
+            setLocation(locationList.get(locationList.size() - 1));
             return "dashboard";
         } catch (NoResultException | NonUniqueResultException e) {
             FacesMessage msg = new FacesMessage(" Invalid Username and Password. ");

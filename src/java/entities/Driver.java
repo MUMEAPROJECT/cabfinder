@@ -63,14 +63,6 @@ public class Driver implements Serializable {
         this.location = location;
     }
 
-//    public Location getCurrentLocation() {
-//        return currentLocation;
-//    }
-//
-//    public void setCurrentLocation(Location currentLocation) {
-//        this.currentLocation = currentLocation;
-//    }
-
     public String getRegNo() {
         return regNo;
     }

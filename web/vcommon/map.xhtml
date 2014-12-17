@@ -15,8 +15,9 @@
 
                 <div id="map-setting">
                     <div class="map-option">
-                        <h:outputText value=" Base Layer " styleClass="bold justify"></h:outputText>
-                        <br/>
+                        <div class="setting-header">
+                            <h:outputText value=" Base Layer "></h:outputText>
+                        </div>
                         <h:selectOneMenu id="menu1" value="#{mapController.background}">
                             <f:selectItem itemValue="streets" itemLabel="ESRI Streets"></f:selectItem>
                             <f:selectItem itemValue="satellite" itemLabel="ESRI Satellite"></f:selectItem>
@@ -24,6 +25,18 @@
                             <f:selectItem itemValue="osm" itemLabel="Open Street Map"></f:selectItem>
                             <f:ajax render="map1"></f:ajax>
                         </h:selectOneMenu>
+
+                        <div class="setting-header">
+                            <h:outputText value=" Layers "></h:outputText>
+                        </div>
+                        <h:selectBooleanCheckbox value="#{mapController.driverStatus}">
+                            <f:ajax render="map1"></f:ajax>
+                        </h:selectBooleanCheckbox>
+                        <h:outputText styleClass="bold" value=" Current Position "></h:outputText>
+                        <h:selectBooleanCheckbox value="#{mapController.driverStatus}">
+                            <f:ajax render="map1"></f:ajax>
+                        </h:selectBooleanCheckbox>
+                        <h:outputText styleClass="bold" value=" Other Cab Drivers "></h:outputText>
                     </div>
                 </div>
 
@@ -37,7 +50,8 @@
 
 
                 <gis:map id="map1" mapPanel="panel1" background="#{mapController.background}" latitude="#{mapController.latitude}" longitude="#{mapController.longitude}" zoom="#{mapController.zoom}">
-                    <gis:service type="graphics" model="#{mapController.getCabGraphicsModel(driverController.driver)}"></gis:service>
+                    <gis:service type="graphics" model="#{mapController.getCabGraphicsModel()}"></gis:service>
+                    <gis:service type="graphics" model="#{mapController.getDriverGraphicsModel(driverController.driver)}" visible="#{mapController.driverStatus}"></gis:service>
                 </gis:map>
             </h:form>
         </ui:define>

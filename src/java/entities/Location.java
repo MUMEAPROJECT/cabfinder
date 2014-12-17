@@ -6,12 +6,15 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -27,16 +30,27 @@ public class Location implements Serializable {
     private String street;
     private double lon;
     private double lat;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeStamp;
     
 //    @ManyToMany(mappedBy = "location")
 //    private List<Driver> driver;
 
+    
     public String getStreet() {
         return street;
     }
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public double getLon() {

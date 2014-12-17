@@ -189,6 +189,10 @@ div.banner > form#geolocation > input[type='text']{
     padding-left: 5px;
     margin: 0;
     margin-top: 5px;
+    width: 150px;
+}
+div.banner > form#geolocation > a{
+    font-size: 12px;
 }
 .banner{
     position: relative;
@@ -295,9 +299,16 @@ div#map-setting{
     z-index: 1000;
     width: 100%;
 }
+.setting-header{
+    font-weight: bold;
+    color: #A30000;
+    background: #d4d4d4;
+    margin: 0;
+    margin-top: 1em;
+}
 div.map-option{
     position: inherit;
-    background: whitesmoke;
+    background: #e4e4e4;
     float: right;
     direction: ltr;
     width: 150px;

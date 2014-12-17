@@ -13,6 +13,7 @@ import com.gisfaces.event.MapSelectEvent;
 import com.gisfaces.model.GraphicsModel;
 import com.gisfaces.model.Marker;
 import entities.Driver;
+import entities.Location;
 import java.awt.event.ActionEvent;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,11 +42,22 @@ public class MapController {
     private String where;
     private String json;
     private GraphicsModel cabGraphicsModel;
+    private GraphicsModel driverGraphicsModel;
+    private boolean driverStatus;
     private String map;
 
     public MapController() {
         super();
         reset();
+        driverStatus = true;
+    }
+    
+    public boolean isDriverStatus() {
+        return driverStatus;
+    }
+
+    public void setDriverStatus(boolean driverStatus) {
+        this.driverStatus = driverStatus;
     }
 
     public String getBackground() {
@@ -112,12 +124,24 @@ public class MapController {
         this.json = json;
     }
 
-    public GraphicsModel getCabGraphicsModel(Driver driver) {
+    public GraphicsModel getCabGraphicsModel() {
         return cabGraphicsModel;
     }
 
     public void setCabGraphicsModel(GraphicsModel cabGraphicsModel) {
         this.cabGraphicsModel = cabGraphicsModel;
+    }
+
+    public GraphicsModel getDriverGraphicsModel(Driver driver) {
+        buildDriverGraphicsModel(driver);
+        if (driverStatus == true)
+            return driverGraphicsModel;
+        else
+            return null;
+    }
+
+    public void setDriverGraphicsModel(GraphicsModel driverGraphicsModel) {
+        this.driverGraphicsModel = driverGraphicsModel;
     }
 
     public void doMapClickListener(AjaxBehaviorEvent event) {
@@ -236,4 +260,35 @@ public class MapController {
         return marker;
     }
    
+    public void buildDriverGraphicsModel(Driver driver){
+        this.driverGraphicsModel = new GraphicsModel();
+        this.driverGraphicsModel.setName("Cab Finder");
+
+        List<Marker> markers = this.driverGraphicsModel.getMarkers();
+        List<Location> locationList = driver.getLocation();
+        double lonSum = 0, latSum = 0, counter = 0;
+        for (Location location: locationList){
+            markers.add(buildDriverMarker(location.getLat(), location.getLon(), location.getStreet()));
+            counter++;
+            lonSum += location.getLon();
+            latSum += location.getLat();
+        }
+        
+    }
+    
+    public Marker buildDriverMarker(double lat, double lon, String street){
+        Map<String, Object> attributes = new LinkedHashMap<String, Object>();
+        attributes.put("Street", street);
+        
+        Marker marker = new Marker();
+        marker.setLatitude(lat);
+        marker.setLongitude(lon);
+        marker.setAttributes(attributes);
+        //marker.setDraggable(true);
+        marker.setImage("../resources/img/dmarker.png");
+        marker.setHeight(30);
+        marker.setWidth(25);
+        
+        return marker;
+    }
 }
