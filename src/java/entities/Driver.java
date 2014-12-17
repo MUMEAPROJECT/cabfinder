@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -40,21 +42,34 @@ public class Driver implements Serializable {
     private String regNo;
     private String color;
     private String cabImage;
-    private Location currentLocation;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private Location currentLocation;
     
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "driver_location",
         joinColumns = {@JoinColumn(name = "driver", referencedColumnName = "ID")},
         inverseJoinColumns = {@JoinColumn(name = "location", referencedColumnName = "ID")})
     private List<Location> location;
-
-    public Location getCurrentLocation() {
-        return currentLocation;
+    
+    public Driver(){
+        location = new ArrayList<Location>();
     }
 
-    public void setCurrentLocation(Location currentLocation) {
-        this.currentLocation = currentLocation;
+    public List<Location> getLocation() {
+        return location;
     }
+
+    public void setLocation(List<Location> location) {
+        this.location = location;
+    }
+
+//    public Location getCurrentLocation() {
+//        return currentLocation;
+//    }
+//
+//    public void setCurrentLocation(Location currentLocation) {
+//        this.currentLocation = currentLocation;
+//    }
 
     public String getRegNo() {
         return regNo;

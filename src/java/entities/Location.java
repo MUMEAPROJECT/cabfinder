@@ -28,8 +28,8 @@ public class Location implements Serializable {
     private double lon;
     private double lat;
     
-    @ManyToMany(mappedBy = "location")
-    private List<Driver> driver;
+//    @ManyToMany(mappedBy = "location")
+//    private List<Driver> driver;
 
     public String getStreet() {
         return street;

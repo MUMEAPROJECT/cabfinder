@@ -7,23 +7,27 @@ package my.controller;
 
 import boundary.LocationFacadeLocal;
 import entities.Location;
+import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
+import javax.naming.InitialContext;
 
 /**
  *
  * @author PTamang
  */
-@Named
-@RequestScoped
-public class LocationController {
+@ManagedBean(name = "locationController")
+@SessionScoped
+public class LocationController implements Serializable{
     
     private Location location;
     @EJB
     private LocationFacadeLocal lfacade;
     
-    LocationController(){
+    public LocationController(){
         location = new Location();
     }
 
@@ -34,5 +38,7 @@ public class LocationController {
     public void setLocation(Location location) {
         this.location = location;
     }
+    
+    
     
 }

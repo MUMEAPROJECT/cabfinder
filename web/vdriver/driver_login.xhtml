@@ -27,7 +27,7 @@
             </p:panel>
 
             <h:commandButton styleClass="bold" value=" Login " action="#{driverController.checkCredentials}"/>
-            <h:commandButton styleClass="bold" value=" Cancel " action="index"/>
+            <h:commandButton styleClass="bold" value=" Cancel " immediate="true" action="/index.xhtml"/>
             <h:link styleClass="signup" value=" Sign Up " outcome="driver_signup"/>
         </h:form>
     </h:body>

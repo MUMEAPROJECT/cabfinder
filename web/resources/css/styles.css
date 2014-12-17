@@ -2,21 +2,21 @@
 /* CSS Document */
 
 body {
-	background-image: url(../images/gisfaces-background.jpg);
-	background-repeat: no-repeat;
-	background-position: center top;
-	background-color: #FFFFFF;
-	margin: 0px;
+    background-image: url(../images/gisfaces-background.jpg);
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: #FFFFFF;
+    margin: 0px;
 }
 
 #header {
-	width: 100%;
-	margin-right: auto;
-	margin-left: auto;
-	margin-top: 0px;
-	height: auto;
-	padding-top: 0px;
-	text-align: center;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 0px;
+    height: auto;
+    padding-top: 0px;
+    text-align: center;
 }
 
 .header{
@@ -44,51 +44,55 @@ body {
 }
 
 #content {
-	width: 100%;
-	margin-right: auto;
-	margin-left: auto;
-	margin-top: 73px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 73px;
 }
 
 h1 {
-	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
-	font-size: 30px;
-	font-weight: bold;
-	color: #595010;
-	margin-bottom: 40px;
-	text-align: center;
+    font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: #595010;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+h2{
+    color: #A30000;
 }
 
 a {
-	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
-	font-size: 18px;
-	font-weight: bold;
-	color: #4C6C35;
-	text-decoration: none;
+    font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #4C6C35;
+    text-decoration: none;
 }
 
 a:hover {
-	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
-	font-size: 18px;
-	font-weight: bold;
-	color: #5A5012;
-	text-decoration: underline;
+    font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #5A5012;
+    text-decoration: underline;
 }
 
 table {
-	margin: 0px auto;
-	border-spacing: 10px;
+    margin: 0px auto;
+    border-spacing: 10px;
 }
 
 .viewsource {
-	visibility: hidden;
+    visibility: hidden;
 }
 @-moz-document url-prefix() {
-	.viewsource, .viewsource:hover {
-		visibility: visible;
-		font-size: 10px;
-		font-weight: normal;
-	}
+    .viewsource, .viewsource:hover {
+        visibility: visible;
+        font-size: 10px;
+        font-weight: normal;
+    }
 }
 
 /*
@@ -165,9 +169,26 @@ input[type='submit']:hover{
     display: block;
     width: 100%;
     height: 100px;
-    background: #242400;
+    background: #242445;
     margin: 0;
     padding: 0;
+}
+.geom-wrapper{
+    height: 40px;
+    background: #e4e4e4;
+}
+.geom-wrapper > .banner,  .geom-wrapper > .banner > form{
+    height: 40px;
+    padding: 0;
+}
+.geom-wrapper > .banner > form{
+    float: left;
+}
+div.banner > form#geolocation > input[type='text']{
+    padding: 0;
+    padding-left: 5px;
+    margin: 0;
+    margin-top: 5px;
 }
 .banner{
     position: relative;
@@ -218,8 +239,9 @@ h2 > img{
 .content-wrapper{
     position: relative;
     width: 750px;
-    left: 8px;
     float: right;
+    padding-left: 8px;
+    margin-top: 5px;
 }
 .footer-wrapper{
     display: block;
@@ -228,6 +250,7 @@ h2 > img{
     border-top: 1px solid #e3e3e3;
     padding: 4px 0;
     margin-top: 1em;
+    height: 80px;
 }
 table{
     border-collapse: collapse;
@@ -252,6 +275,114 @@ tr > td > input[type='text'], tr > td > input[type='password']{
 .signup{
     width: 950px;
 }
-h2{
+h3, th{
     color: #A30000;
 }
+h3{
+    background: whitesmoke;
+    padding: 5px;
+    margin-left: -10px;
+}
+.map{
+    position: relative;
+    display: block;
+    height: 100%;
+}
+div#map-setting{
+    position: absolute;
+    display: none;
+    direction: rtl;
+    z-index: 1000;
+    width: 100%;
+}
+div.map-option{
+    position: inherit;
+    background: whitesmoke;
+    float: right;
+    direction: ltr;
+    width: 150px;
+    z-index: 1001;
+    padding: 5px;
+    top: 10px;
+}
+.toggle{
+    position: relative;
+    z-index: 1002;
+    float: right;
+    direction: rtl;
+    top: 15px;
+}
+.setting{
+    position: relative;
+    display: block;
+    float: right;
+    padding: 0;
+    margin: 0;
+    margin-top: 0.7em;
+    background: url("../resources/img/setup_black.png") no-repeat 0 0;
+    width: 20px;
+    height:20px;
+    cursor: pointer;
+    z-index: 1016;
+}
+.setting > ul{
+    position: absolute;
+    display: none;
+    z-index: 1015;
+    padding: 1em;
+    margin-top: 1.4em;
+    margin-left: -1em; 
+    direction: ltr;
+    list-style-type: none;
+    background: #e4e4e4;
+}
+.setting:hover{
+    background: url("../resources/img/setup_black.png") no-repeat 0 0;
+}
+.setting > ul > li{
+    display: block;
+    width: 100px;
+    border-bottom: 1px solid #a4a4a4;
+    margin-top: 8px;
+    position: relative;
+    direction: rtl;
+    cursor: pointer;
+}
+
+.setting > ul > li > a{
+    text-decoration: none;
+    color: #333;
+    font-weight: normal;
+}
+.setting > ul > li > a:hover{
+    font-weight: bold;
+}
+
+
+
+
+/*
+** Table design css
+*/
+.employeeTable{   
+    border-collapse:collapse;
+    border:1px solid #000000;
+}
+
+.employeeTableHeader{
+    text-align:center;
+    background:none repeat scroll 0 0 #B5B5B5;
+    border-bottom:1px solid #000000;  
+    padding:2px;
+}
+
+.employeeTableOddRow{
+    text-align:center;
+    background:none repeat scroll 0 0 #FFFFFFF;	
+}
+
+.employeeTableEvenRow{
+    text-align:center;
+    background:none repeat scroll 0 0 #D3D3D3;
+}
+

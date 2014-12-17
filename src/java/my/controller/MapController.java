@@ -12,6 +12,7 @@ import com.gisfaces.event.MapGraphicDragEvent;
 import com.gisfaces.event.MapSelectEvent;
 import com.gisfaces.model.GraphicsModel;
 import com.gisfaces.model.Marker;
+import entities.Driver;
 import java.awt.event.ActionEvent;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -40,6 +41,7 @@ public class MapController {
     private String where;
     private String json;
     private GraphicsModel cabGraphicsModel;
+    private String map;
 
     public MapController() {
         super();
@@ -110,7 +112,7 @@ public class MapController {
         this.json = json;
     }
 
-    public GraphicsModel getCabGraphicsModel() {
+    public GraphicsModel getCabGraphicsModel(Driver driver) {
         return cabGraphicsModel;
     }
 
@@ -185,7 +187,7 @@ public class MapController {
     }
 
     public void reset() {
-        this.background = "osm";
+        this.background = "topo";
         this.latitude = 30.304353;
         this.longitude = -81.655535;
         this.zoom = 10;
@@ -233,4 +235,5 @@ public class MapController {
         
         return marker;
     }
+   
 }

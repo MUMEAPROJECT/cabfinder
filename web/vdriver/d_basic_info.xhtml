@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="../template/default.xhtml">
+        <ui:define name="title">Cab Finder - Driver Dashboard</ui:define>
+
+        <ui:define name="content">
+            <h:form enctype="multipart/form-data">
+                <h:head><h3>Driver &rsaquo; Basic Info</h3></h:head>
+                <table border="0">
+                    <thead>
+                        <tr> 
+                            <th colspan="6">Driver Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><h:outputLabel>Name: </h:outputLabel></td>
+                            <td><h:inputText value="#{driverController.driver.name}"  required="true"/></td>
+                            <td><h:outputLabel>Phone: </h:outputLabel></td>
+                            <td><h:inputText value="#{driverController.driver.phone}"  required="true"/></td>
+                            <td><h:outputLabel>Address: </h:outputLabel></td>
+                            <td><h:inputText value="#{driverController.driver.address}" required="true"/></td>
+                        </tr>
+                        <tr>
+                            <td><h:outputLabel>Username: </h:outputLabel></td>
+                            <td><h:inputText id="username" value="#{driverController.driver.username}" required="true"/></td>
+                            <td><h:outputLabel>Password: </h:outputLabel></td>
+                            <td></td>
+                            <td><h:outputLabel>Re-Password: </h:outputLabel></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><h:outputLabel>Avatar: </h:outputLabel></td>
+                            <td colspan="5">
+                                <p:fileUpload fileUploadListener="#{driverController.uploadAvatar}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="100000"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="6">Cab Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><h:outputLabel>Registration No.: </h:outputLabel></td>
+                            <td><h:inputText value="#{driverController.driver.regNo}"/></td>
+                            <td><h:outputText value=" Color: " /></td>
+                            <td><p:colorPicker value="#{driverController.driver.color}" /><br/>  </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><h:outputLabel>Cab Image: </h:outputLabel></td>
+                            <td colspan="5">
+                                <p:fileUpload fileUploadListener="#{driverController.uploadCabImage}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="100000"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h:commandButton styleClass="bold" value=" Save " action="#{driverController.saveDriver}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

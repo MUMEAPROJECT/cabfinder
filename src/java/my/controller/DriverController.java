@@ -6,7 +6,9 @@
 package my.controller;
 
 import boundary.DriverFacadeLocal;
+import boundary.LocationFacadeLocal;
 import entities.Driver;
+import entities.Location;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.ejb.TransactionAttribute;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -31,7 +34,7 @@ import org.primefaces.model.UploadedFile;
  *
  * @author PTamang
  */
-@ManagedBean(name = "driverController")
+@ManagedBean(name = "driverController", eager = true)
 @SessionScoped
 public class DriverController implements Serializable {
 
@@ -39,9 +42,28 @@ public class DriverController implements Serializable {
     @EJB
     private DriverFacadeLocal dfacade;
 
+    private Location location;
+    @EJB
+    private LocationFacadeLocal lfacade;
+
     private String repass;
     private String username;
     private String password;
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    @TransactionAttribute
+    public void addLocation() {
+        //System.out.println(location.getLat() + " - " + location.getLon());
+        driver.getLocation().add(location);
+        dfacade.edit(driver); // update
+    }
 
     public String getUsername() {
         return username;
@@ -77,6 +99,8 @@ public class DriverController implements Serializable {
 
     public DriverController() {
         driver = new Driver();
+        location = new Location();
+        //driver.setCurrentLocation(new Location());
     }
 
     public Driver getDriver() {
@@ -88,7 +112,6 @@ public class DriverController implements Serializable {
     }
 
     public String checkCredentials() {
-        // Driver result = null;
         try {
             driver = dfacade.checkCredential(username, password);
             return "dashboard";
@@ -103,13 +126,17 @@ public class DriverController implements Serializable {
         dfacade.create(driver);
         return "vdriver/driver_login";
     }
+    
+    public void saveDriver(){
+        dfacade.edit(driver);
+    }
 
     public void uploadAvatar(FileUploadEvent event) {
         FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         // Do what you want with the file        
         try {
-            String filename = "driver/" + event.getFile().getFileName();
+            String filename = event.getFile().getFileName();
             driver.setAvatar(filename);
             copyFile(filename, event.getFile().getInputstream());
         } catch (IOException e) {
@@ -131,7 +158,7 @@ public class DriverController implements Serializable {
     }
 
     public void copyFile(String fileName, InputStream in) {
-        String destination = "D:/upload/";
+        String destination = "C:\\Users\\Santosh\\GlassFish_Server40\\glassfish\\domains\\domain1\\applications\\CabFinder\\resources\\cab\\";
         try {
 
             // write the inputStream to a FileOutputStream
@@ -160,11 +187,8 @@ public class DriverController implements Serializable {
 
         if (fc.getExternalContext().getSessionMap().get("id") == null) {
             return "main";
-        }
-        else {
+        } else {
             return "vdriver/dashboard";
         }
     }
 }
-
-

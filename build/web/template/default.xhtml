@@ -9,6 +9,7 @@
         </title>
 
         <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+        <meta http-equiv="refresh" content="${pageContext.session.maxInactiveInterval};url=index.xhtml"></meta>
     </h:head>
     <h:body>
 
@@ -20,10 +21,36 @@
                         <h:graphicImage library="img" url="../resources/img/magnifier.png" alt="Target Image" height="60px"></h:graphicImage>
                         Cab Finder
                     </h2>
+
                     <div class="banner-img">
                         <h:graphicImage library="img" url="../resources/img/taxi.png" alt="Taxi Image" height="90px"></h:graphicImage>
                     </div>
                 </ui:insert> 
+            </div>
+        </div>
+        <div class="banner-wrapper geom-wrapper">
+            <div class="banner">
+                <h:form id="geolocation">
+                    <h:outputLabel styleClass="bold" value="Latitude: "/>
+                    <h:inputText id="lat" value="#{driverController.location.lat}"/>&nbsp;&nbsp;
+                    <h:outputLabel styleClass="bold" value="Longitude: "/>
+                    <h:inputText id="lon" value="#{driverController.location.lon}"/>
+                    <a onclick="getLocation()" href="#">Update Location</a>
+                    <h:commandButton style="width: auto;" value="Submit Geolocation" action="#{driverController.addLocation}"/>
+                </h:form>
+                <div class="setting" id="setting">
+                    <ul id="setting-ul">
+                        <li>
+                            <h:link value="Logout" outcome="/index.xhtml"/>
+                        </li>
+                        <li>
+                            Settings
+                        </li>
+                        <li>
+                            Sample Link
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -34,10 +61,10 @@
                     <ui:insert name="leftNavigation">
                         <ul>
                             <li>
-                                <a href="#">DashBoard</a>
+                                <h:link outcome="/vdriver/dashboard" value="Dashboard"/>
                             </li>
                             <li>
-                                <a href="#">Basic Info</a>
+                                <h:link outcome="/vdriver/d_basic_info" value="Basic Info"/>
                             </li>
                             <li>
                                 <a href="#">Cab Details</a>
@@ -46,7 +73,7 @@
                                 <a href="#">Report</a>
                             </li>
                             <li>
-                                <a href="#">Map</a>
+                                <h:link outcome="/vcommon/map" value="Map"/>
                             </li>
                         </ul>
                     </ui:insert>
@@ -65,6 +92,26 @@
                 </div>
             </div>
         </div>
+        <script>
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
+            }
+            function showPosition(position) {
+                document.getElementById("geolocation:lat").value = position.coords.latitude;
+                document.getElementById("geolocation:lon").value = position.coords.longitude;
+            }
+
+            document.getElementById("setting").onclick = function () {
+                if (document.getElementById("setting-ul").style.display == "block")
+                    document.getElementById("setting-ul").style.display = "none";
+                else
+                    document.getElementById("setting-ul").style.display = "block";
+            };
+        </script>
     </h:body>
 </html>
 
