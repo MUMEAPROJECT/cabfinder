@@ -18,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 /**
  *
@@ -51,8 +52,19 @@ public class Driver implements Serializable {
         inverseJoinColumns = {@JoinColumn(name = "location", referencedColumnName = "ID")})
     private List<Location> location;
     
+    @Transient
+    private Location currentLocation;
+    
     public Driver(){
         location = new ArrayList<Location>();
+    }
+
+    public Location getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(Location currentLocation) {
+        this.currentLocation = currentLocation;
     }
 
     public List<Location> getLocation() {

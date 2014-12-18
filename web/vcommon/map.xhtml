@@ -33,7 +33,7 @@
                             <f:ajax render="map1"></f:ajax>
                         </h:selectBooleanCheckbox>
                         <h:outputText styleClass="bold" value=" Current Position "></h:outputText>
-                        <h:selectBooleanCheckbox value="#{mapController.driverStatus}">
+                        <h:selectBooleanCheckbox value="#{mapController.userStatus}">
                             <f:ajax render="map1"></f:ajax>
                         </h:selectBooleanCheckbox>
                         <h:outputText styleClass="bold" value=" Other Cab Drivers "></h:outputText>
@@ -52,6 +52,7 @@
                 <gis:map id="map1" mapPanel="panel1" background="#{mapController.background}" latitude="#{mapController.latitude}" longitude="#{mapController.longitude}" zoom="#{mapController.zoom}">
                     <gis:service type="graphics" model="#{mapController.getCabGraphicsModel()}"></gis:service>
                     <gis:service type="graphics" model="#{mapController.getDriverGraphicsModel(driverController.driver)}" visible="#{mapController.driverStatus}"></gis:service>
+                    <gis:service type="graphics" model="#{mapController.getUserGraphicsModel()}" visible="#{mapController.userStatus}"></gis:service>
                 </gis:map>
             </h:form>
         </ui:define>

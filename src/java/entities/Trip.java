@@ -13,12 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Santosh
  */
 @Entity
+@XmlRootElement
 public class Trip implements Serializable {
 
     private static final long serialVersionUID = 1L;

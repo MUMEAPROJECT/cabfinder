@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/F:/Cabfinder/src/java/my/controller/MapController.java</file>
             <file>file:/F:/Cabfinder/src/java/entities/Driver.java</file>
-            <file>file:/F:/Cabfinder/web/resources/css/styles.css</file>
-            <file>file:/F:/Cabfinder/web/vdriver/dashboard.xhtml</file>
+            <file>file:/F:/Cabfinder/src/java/entities/Location.java</file>
             <file>file:/F:/Cabfinder/src/java/my/controller/DriverController.java</file>
             <file>file:/F:/Cabfinder/web/template/default.xhtml</file>
+            <file>file:/F:/Cabfinder/web/vcommon/map.xhtml</file>
+            <file>file:/F:/Cabfinder/src/java/my/controller/MyTimer.java</file>
         </group>
     </open-files>
 </project-private>

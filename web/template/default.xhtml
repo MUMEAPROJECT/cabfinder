@@ -32,11 +32,11 @@
             <div class="banner">
                 <h:form id="geolocation">
                     <h:outputLabel styleClass="bold" value="Latitude: "/>
-                    <h:inputText id="lat" value="#{driverController.location.lat}"/>&nbsp;
+                    <h:inputText id="lat" value="#{driverController.driver.currentLocation.lat}"/>&nbsp;
                     <h:outputLabel styleClass="bold" value="Longitude: "/>
-                    <h:inputText id="lon" value="#{driverController.location.lon}"/>&nbsp;
+                    <h:inputText id="lon" value="#{driverController.driver.currentLocation.lon}"/>&nbsp;
                     <h:outputLabel styleClass="bold" value="Street: "/>
-                    <h:inputText id="street" value="#{driverController.location.street}"/>
+                    <h:inputText id="street" value="#{driverController.driver.currentLocation.street}"/>
                     <a onclick="getLocation()" href="#">Update Location</a>
                     <h:commandButton style="width: auto;" value="Submit Geolocation" action="#{driverController.addLocation}"/>
                 </h:form>

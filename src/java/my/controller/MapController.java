@@ -15,9 +15,11 @@ import com.gisfaces.model.Marker;
 import entities.Driver;
 import entities.Location;
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -31,7 +33,7 @@ import javax.inject.Named;
  */
 @ManagedBean
 @SessionScoped
-public class MapController {
+public class MapController implements Serializable{
 
     private String background;
     private double latitude;
@@ -44,12 +46,25 @@ public class MapController {
     private GraphicsModel cabGraphicsModel;
     private GraphicsModel driverGraphicsModel;
     private boolean driverStatus;
+    private GraphicsModel userGraphicsModel;
+    private boolean userStatus;
     private String map;
 
+   private DriverController driverController;
+   
     public MapController() {
         super();
         reset();
         driverStatus = true;
+        userStatus = true;
+    }
+
+    public boolean isUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(boolean userStatus) {
+        this.userStatus = userStatus;
     }
     
     public boolean isDriverStatus() {
@@ -144,6 +159,19 @@ public class MapController {
         this.driverGraphicsModel = driverGraphicsModel;
     }
 
+    public GraphicsModel getUserGraphicsModel() {
+        if (userStatus == true)
+            return userGraphicsModel;
+        else
+            return null;
+    }
+
+    public void setUserGraphicsModel(GraphicsModel userGraphicsModel) {
+        this.userGraphicsModel = userGraphicsModel;
+    }
+    
+    
+
     public void doMapClickListener(AjaxBehaviorEvent event) {
         MapClickEvent e = (MapClickEvent) event;
 
@@ -212,21 +240,31 @@ public class MapController {
 
     public void reset() {
         this.background = "topo";
-        this.latitude = 30.304353;
-        this.longitude = -81.655535;
-        this.zoom = 10;
+//        this.latitude = 30.304353;
+//        this.longitude = -81.655535;
+        this.latitude = 41.0226793;
+        this.longitude = -91.967119;
+        this.zoom = 13;
         this.opacity = 1.0;
         this.visible = true;
         this.where = "Magnitude >= 2";
         
         buildCabGraphicsModel();
+        buildUserGraphicsModel();
     }
 
     private void buildCabGraphicsModel() {
         this.cabGraphicsModel = new GraphicsModel();
-        this.cabGraphicsModel.setName("Cab Finder");
+        this.cabGraphicsModel.setName("Cab Finder > Driver");
 
         List<Marker> markers = this.cabGraphicsModel.getMarkers();
+        driverController = new DriverController();
+//       List<Location> locations =  driverController.findLocations();
+//        
+//        for (Location location : locations) {
+//            markers.add(buildCabMarker(location.getLat(), location.getLon(), location.getStreet()));
+//        }
+               
         markers.add(buildCabMarker(30.304353, -81.655535, "1980 San Marco Blvd, Jacksonville, FL 32207"));
         markers.add(buildCabMarker(30.312096, -81.680833, "1650 Margaret St, Jacksonville, FL 32204"));
         markers.add(buildCabMarker(30.2432613, -81.5986099, "7153 Philips Hwy, Jacksonville, FL 32256"));
@@ -262,17 +300,20 @@ public class MapController {
    
     public void buildDriverGraphicsModel(Driver driver){
         this.driverGraphicsModel = new GraphicsModel();
-        this.driverGraphicsModel.setName("Cab Finder");
+        this.driverGraphicsModel.setName("Cab Finder > YOU");
 
         List<Marker> markers = this.driverGraphicsModel.getMarkers();
         List<Location> locationList = driver.getLocation();
-        double lonSum = 0, latSum = 0, counter = 0;
-        for (Location location: locationList){
-            markers.add(buildDriverMarker(location.getLat(), location.getLon(), location.getStreet()));
-            counter++;
-            lonSum += location.getLon();
-            latSum += location.getLat();
-        }
+        
+//        double lat = 0, lon = 0, counter = 0;
+//        for (Location l: locationList){
+//            markers.add(buildDriverMarker(l.getLat(), l.getLon(), l.getStreet()));
+//            counter++;
+//            lat += l.getLat();
+//            lon += l.getLon();
+//        }
+//        this.latitude = lat / counter;
+//        this.longitude = lon / counter;
         
     }
     
@@ -288,6 +329,36 @@ public class MapController {
         marker.setImage("../resources/img/dmarker.png");
         marker.setHeight(30);
         marker.setWidth(25);
+        
+        return marker;
+    }
+    
+    public void buildUserGraphicsModel(){
+        this.userGraphicsModel = new GraphicsModel();
+        this.userGraphicsModel.setName("Cab Finder > User");
+
+        List<Marker> markers = this.userGraphicsModel.getMarkers();
+        markers.add(buildUserMarker(41.00656363088295, -91.95743432800263, "1980 San Marco Blvd, Jacksonville, FL 32207"));
+        markers.add(buildUserMarker(41.007535185596815, -91.96245542327866, "1650 Margaret St, Jacksonville, FL 32204"));
+        markers.add(buildUserMarker(41.00662840164286, -91.96764817993162, "7153 Philips Hwy, Jacksonville, FL 32256"));
+        markers.add(buildUserMarker(41.01284609816806, -91.96507325927725, "7153 Philips Hwy, Jacksonville, FL 32256"));
+    }
+    
+    private Marker buildUserMarker(double latitude, double longitude, String address) {
+        Map<String, Object> attributes = new LinkedHashMap<String, Object>();
+        attributes.put("Address", address);
+        attributes.put("Driver Name", "Harke");
+        attributes.put("Location", "Location");
+        attributes.put("Phone No.", "987654321");
+
+        Marker marker = new Marker();
+        marker.setLatitude(latitude);
+        marker.setLongitude(longitude);
+        marker.setAttributes(attributes);
+        //marker.setDraggable(true);
+        marker.setImage("../resources/img/userp.png");
+        marker.setHeight(20);
+        marker.setWidth(16);
         
         return marker;
     }

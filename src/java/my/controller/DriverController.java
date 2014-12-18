@@ -7,6 +7,7 @@ package my.controller;
 
 import boundary.DriverFacadeLocal;
 import boundary.LocationFacadeLocal;
+import com.gisfaces.model.Marker;
 import entities.Driver;
 import entities.Location;
 import java.io.File;
@@ -18,7 +19,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.Schedule;
+import javax.ejb.TimerService;
 import javax.ejb.TransactionAttribute;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.FacesMessage;
@@ -64,10 +68,21 @@ public class DriverController implements Serializable {
     @TransactionAttribute
     public void addLocation() {
         //System.out.println(location.getLat() + " - " + location.getLon());
+        location.setLat(driver.getCurrentLocation().getLat());
+        location.setLon(driver.getCurrentLocation().getLon());
+        location.setStreet(driver.getCurrentLocation().getStreet());
         location.setTimeStamp(new Date());
+        //lfacade.create(location);
         driver.getLocation().add(location);
         dfacade.edit(driver); // update
+        driver.setCurrentLocation(location);
     }
+    
+//    public List<Location> findLocations()
+//    {
+//        List<Location> locations = this.lfacade.findAll();
+//        return locations;
+//    }
 
     public String getUsername() {
         return username;
@@ -120,7 +135,12 @@ public class DriverController implements Serializable {
             driver = dfacade.checkCredential(username, password);
             List<Location> locationList;
             locationList = driver.getLocation();
-            setLocation(locationList.get(locationList.size() - 1));
+            //setLocation(locationList.get(locationList.size() - 1));
+            Location l = new Location();
+            l = locationList.get(locationList.size() - 1);
+            driver.setCurrentLocation(l);
+            MyTimer timer = new MyTimer();
+            timer.driverController(this);
             return "dashboard";
         } catch (NoResultException | NonUniqueResultException e) {
             FacesMessage msg = new FacesMessage(" Invalid Username and Password. ");
