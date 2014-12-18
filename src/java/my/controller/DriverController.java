@@ -56,6 +56,7 @@ public class DriverController implements Serializable {
     private String repass;
     private String username;
     private String password;
+     MyTimer timer;
 
     public Location getLocation() {
         return location;
@@ -132,6 +133,7 @@ public class DriverController implements Serializable {
 
     public String checkCredentials() {
         try {
+            //List<Driver> d = dfacade.findAll();
             driver = dfacade.checkCredential(username, password);
             List<Location> locationList;
             locationList = driver.getLocation();
@@ -139,14 +141,20 @@ public class DriverController implements Serializable {
             Location l = new Location();
             l = locationList.get(locationList.size() - 1);
             driver.setCurrentLocation(l);
-            MyTimer timer = new MyTimer();
-            timer.driverController(this);
+            MainApp.counter += 1;
+            //timer = new MyTimer();
+            //timer.resetCurrentLocation();
+          // timer.driverController();
             return "dashboard";
         } catch (NoResultException | NonUniqueResultException e) {
             FacesMessage msg = new FacesMessage(" Invalid Username and Password. ");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             return "driver_login";
         }
+    }
+    
+    public int getTotalUsers(){
+        return MainApp.counter;
     }
 
     public String signUp() {
@@ -217,5 +225,10 @@ public class DriverController implements Serializable {
         } else {
             return "vdriver/dashboard";
         }
+    }
+    
+    public String logout(){
+        
+        return null;
     }
 }

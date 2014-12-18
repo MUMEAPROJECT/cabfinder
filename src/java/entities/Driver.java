@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,7 +47,7 @@ public class Driver implements Serializable {
 //    @OneToOne(cascade = CascadeType.ALL)
 //    private Location currentLocation;
     
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "driver_location",
         joinColumns = {@JoinColumn(name = "driver", referencedColumnName = "ID")},
         inverseJoinColumns = {@JoinColumn(name = "location", referencedColumnName = "ID")})
