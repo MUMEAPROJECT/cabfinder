@@ -56,7 +56,7 @@ public class DriverController implements Serializable {
     private String repass;
     private String username;
     private String password;
-     MyTimer timer;
+    MyTimer timer;
 
     public Location getLocation() {
         return location;
@@ -78,13 +78,12 @@ public class DriverController implements Serializable {
         dfacade.edit(driver); // update
         driver.setCurrentLocation(location);
     }
-    
+
 //    public List<Location> findLocations()
 //    {
 //        List<Location> locations = this.lfacade.findAll();
 //        return locations;
 //    }
-
     public String getUsername() {
         return username;
     }
@@ -133,18 +132,20 @@ public class DriverController implements Serializable {
 
     public String checkCredentials() {
         try {
-            //List<Driver> d = dfacade.findAll();
             driver = dfacade.checkCredential(username, password);
             List<Location> locationList;
             locationList = driver.getLocation();
-            //setLocation(locationList.get(locationList.size() - 1));
+            
             Location l = new Location();
-            l = locationList.get(locationList.size() - 1);
+            if (locationList.size() > 0) {
+                l = locationList.get(locationList.size() - 1);
+            }
+
             driver.setCurrentLocation(l);
             MainApp.counter += 1;
             //timer = new MyTimer();
             //timer.resetCurrentLocation();
-          // timer.driverController();
+            // timer.driverController();
             return "dashboard";
         } catch (NoResultException | NonUniqueResultException e) {
             FacesMessage msg = new FacesMessage(" Invalid Username and Password. ");
@@ -152,17 +153,17 @@ public class DriverController implements Serializable {
             return "driver_login";
         }
     }
-    
-    public int getTotalUsers(){
+
+    public int getTotalUsers() {
         return MainApp.counter;
     }
 
     public String signUp() {
         dfacade.create(driver);
-        return "vdriver/driver_login";
+        return "driver_login";
     }
-    
-    public void saveDriver(){
+
+    public void saveDriver() {
         dfacade.edit(driver);
     }
 
@@ -184,7 +185,7 @@ public class DriverController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
         // Do what you want with the file        
         try {
-            String filename = "cab/" + event.getFile().getFileName();
+            String filename = event.getFile().getFileName();
             driver.setCabImage(filename);
             copyFile(filename, event.getFile().getInputstream());
         } catch (IOException e) {
@@ -193,7 +194,7 @@ public class DriverController implements Serializable {
     }
 
     public void copyFile(String fileName, InputStream in) {
-        String destination = "C:\\Users\\Santosh\\GlassFish_Server40\\glassfish\\domains\\domain1\\applications\\CabFinder\\resources\\cab\\";
+        String destination = "C:\\Users\\Santosh\\GlassFish_Server40\\glassfish\\domains\\domain1\\applications\\CabFinder\\resources\\avatar\\";
         try {
 
             // write the inputStream to a FileOutputStream
@@ -226,9 +227,9 @@ public class DriverController implements Serializable {
             return "vdriver/dashboard";
         }
     }
-    
-    public String logout(){
-        
+
+    public String logout() {
+
         return null;
     }
 }

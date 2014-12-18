@@ -28,15 +28,28 @@
 
                         <div class="setting-header">
                             <h:outputText value=" Layers "></h:outputText>
-                        </div>
+                        </div><br/>
                         <h:selectBooleanCheckbox value="#{mapController.driverStatus}">
                             <f:ajax render="map1"></f:ajax>
                         </h:selectBooleanCheckbox>
-                        <h:outputText styleClass="bold" value=" Current Position "></h:outputText>
+                        <h:outputText styleClass="bold" value="Your Position"></h:outputText><br/>
                         <h:selectBooleanCheckbox value="#{mapController.userStatus}">
                             <f:ajax render="map1"></f:ajax>
                         </h:selectBooleanCheckbox>
-                        <h:outputText styleClass="bold" value=" Other Cab Drivers "></h:outputText>
+                        <h:outputText styleClass="bold" value="Users Around"></h:outputText><br/>
+                        <h:selectBooleanCheckbox value="#{mapController.cabStatus}">
+                            <f:ajax render="map1"></f:ajax>
+                        </h:selectBooleanCheckbox>
+                        <h:outputText styleClass="bold" value="Cab Drivers"></h:outputText><br/>
+                        <div class="setting-header">
+                            <h:outputText value=" Legend "></h:outputText>
+                        </div><br/>
+                        <h:graphicImage library="img" url="../resources/img/uplacemark.png" height="20"/>
+                        <h:outputText styleClass="bold" value="Your Position"></h:outputText><br/><br/>
+                        <h:graphicImage library="img" url="../resources/img/taxi_placemark.png" height="20"/>
+                        <h:outputText styleClass="bold" value="Other Drivers"></h:outputText><br/><br/>&nbsp;
+                        <h:graphicImage library="img" url="../resources/img/userp.png" height="20" width="15"/>
+                        <h:outputText styleClass="bold" value="Users"></h:outputText><br/><br/><br/>
                     </div>
                 </div>
 
@@ -50,7 +63,7 @@
 
 
                 <gis:map id="map1" mapPanel="panel1" background="#{mapController.background}" latitude="#{mapController.latitude}" longitude="#{mapController.longitude}" zoom="#{mapController.zoom}">
-                    <gis:service type="graphics" model="#{mapController.getCabGraphicsModel()}"></gis:service>
+                    <gis:service type="graphics" model="#{mapController.getCabGraphicsModel(driverController.driver)}"></gis:service>
                     <gis:service type="graphics" model="#{mapController.getDriverGraphicsModel(driverController.driver)}" visible="#{mapController.driverStatus}"></gis:service>
                     <gis:service type="graphics" model="#{mapController.getUserGraphicsModel()}" visible="#{mapController.userStatus}"></gis:service>
                 </gis:map>

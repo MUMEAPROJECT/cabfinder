@@ -31,7 +31,6 @@
         <div class="banner-wrapper geom-wrapper">
             <div class="banner">
                 <h:form id="geolocation">
-                    <h:outputText value="#{driverController.totalUsers}"></h:outputText>
                     <h:outputLabel styleClass="bold" value="Latitude: "/>
                     <h:inputText id="lat" value="#{driverController.driver.currentLocation.lat}"/>&nbsp;
                     <h:outputLabel styleClass="bold" value="Longitude: "/>
@@ -41,6 +40,7 @@
                     <a onclick="getLocation()" href="#">Update Location</a>
                     <h:commandButton style="width: auto;" value="Submit Geolocation" action="#{driverController.addLocation}"/>
                 </h:form>
+
                 <div class="setting" id="setting">
                     <ul id="setting-ul">
                         <li>
@@ -70,16 +70,18 @@
                                 <h:link outcome="/vdriver/d_basic_info" value="Basic Info"/>
                             </li>
                             <li>
-                                <a href="#">Cab Details</a>
-                            </li>
-                            <li>
                                 <a href="#">Report</a>
                             </li>
                             <li>
                                 <h:link outcome="/vcommon/map" value="Map"/>
                             </li>
                         </ul>
+
                     </ui:insert>
+                </div>
+                <div class="left-nav">
+                    <h:outputText value="Total Current Users: "/>
+                    <h:outputText value="#{driverController.totalUsers}"></h:outputText>
                 </div>
             </div>
 

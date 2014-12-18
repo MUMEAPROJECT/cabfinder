@@ -17,6 +17,7 @@ import entities.Driver;
 import entities.Location;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,7 @@ public class MapController implements Serializable {
     private String where;
     private String json;
     private GraphicsModel cabGraphicsModel;
+    private boolean cabStatus;
     private GraphicsModel driverGraphicsModel;
     private boolean driverStatus;
     private GraphicsModel userGraphicsModel;
@@ -63,12 +65,21 @@ public class MapController implements Serializable {
         this.dfacade = dfacade;
     }
 
-  //  private DriverController driverController;
+    //  private DriverController driverController;
     public MapController() {
         super();
         reset();
         driverStatus = true;
         userStatus = true;
+        cabStatus = true;
+    }
+
+    public boolean isCabStatus() {
+        return cabStatus;
+    }
+
+    public void setCabStatus(boolean cabStatus) {
+        this.cabStatus = cabStatus;
     }
 
     public boolean isUserStatus() {
@@ -151,8 +162,8 @@ public class MapController implements Serializable {
         this.json = json;
     }
 
-    public GraphicsModel getCabGraphicsModel() {
-        buildCabGraphicsModel();
+    public GraphicsModel getCabGraphicsModel(Driver driver) {
+        buildCabGraphicsModel(driver);
         return cabGraphicsModel;
     }
 
@@ -266,7 +277,7 @@ public class MapController implements Serializable {
     }
 
     @TransactionAttribute
-    private void buildCabGraphicsModel() {
+    private void buildCabGraphicsModel(Driver d) {
         this.cabGraphicsModel = new GraphicsModel();
         this.cabGraphicsModel.setName("Cab Finder > Driver");
 
@@ -275,10 +286,16 @@ public class MapController implements Serializable {
             System.out.println("null dfacade");
         }
         List<Driver> drivers = dfacade.findAll();
-
+        List<Location> locations = new ArrayList<>();
+        Location location;
         for (Driver driver : drivers) {
-            for (Location location : driver.getLocation()) {
-                markers.add(buildCabMarker(location.getLat(), location.getLon(), location.getStreet()));
+//            for (Location location : driver.getLocation()) {
+//                markers.add(buildCabMarker(location.getLat(), location.getLon(), location.getStreet()));
+//            }
+            locations = driver.getLocation();
+            if (!driver.equals(d) && locations.size() > 0) {
+                location = locations.get(locations.size() - 1);
+                markers.add(buildCabMarker(location.getLat(), location.getLon(), location.getStreet(), driver.getName(), driver.getAddress(), driver.getPhone(), driver.getRegNo()));
             }
         }
 //        markers.add(buildCabMarker(30.304353, -81.655535, "1980 San Marco Blvd, Jacksonville, FL 32207"));
@@ -295,12 +312,13 @@ public class MapController implements Serializable {
 //        markers.add(buildCabMarker(30.190558, -81.551744, "9940 Southside Blvd, Jacksonville, FL 32256"));
     }
 
-    private Marker buildCabMarker(double latitude, double longitude, String address) {
+    private Marker buildCabMarker(double latitude, double longitude, String address, String name, String add, String phone, String reg) {
         Map<String, Object> attributes = new LinkedHashMap<String, Object>();
-        attributes.put("Address", address);
-        attributes.put("Driver Name", "Harke");
-        attributes.put("Location", "Location");
-        attributes.put("Phone No.", "987654321");
+        attributes.put("Location", address);
+        attributes.put("Driver Name", name);
+        attributes.put("Address", add);
+        attributes.put("Phone No.", phone);
+        attributes.put("Vehicle No.", reg);
 
         Marker marker = new Marker();
         marker.setLatitude(latitude);
@@ -323,30 +341,35 @@ public class MapController implements Serializable {
 
         double lat = 0, lon = 0, counter = 0;
         for (Location l : locationList) {
-            markers.add(buildDriverMarker(l.getLat(), l.getLon(), l.getStreet()));
+            //markers.add(buildDriverMarker(l.getLat(), l.getLon(), l.getStreet()));
             counter++;
             lat += l.getLat();
             lon += l.getLon();
         }
+        Location location = null;
+        if (locationList.size() > 0) {
+            location = locationList.get(locationList.size() - 1);
+        }
+
+        markers.add(buildDriverMarker(location.getLat(), location.getLon(), location.getStreet(), driver.getName(), driver.getAddress(), driver.getPhone(), driver.getRegNo()));
         this.latitude = lat / counter;
         this.longitude = lon / counter;
     }
 
-    public List<Location> getDriverList() {
-        return null;
-
-    }
-
-    public Marker buildDriverMarker(double lat, double lon, String street) {
+    public Marker buildDriverMarker(double lat, double lon, String street, String name, String add, String phone, String reg) {
         Map<String, Object> attributes = new LinkedHashMap<String, Object>();
-        attributes.put("Street", street);
+        attributes.put("Location", street);
+        attributes.put("Driver Name", name);
+        attributes.put("Address", add);
+        attributes.put("Phone No.", phone);
+        attributes.put("Vehicle No.", reg);
 
         Marker marker = new Marker();
         marker.setLatitude(lat);
         marker.setLongitude(lon);
         marker.setAttributes(attributes);
         //marker.setDraggable(true);
-        marker.setImage("../resources/img/dmarker.png");
+        marker.setImage("../resources/img/uplacemark.png");
         marker.setHeight(30);
         marker.setWidth(25);
 
@@ -358,16 +381,16 @@ public class MapController implements Serializable {
         this.userGraphicsModel.setName("Cab Finder > User");
 
         List<Marker> markers = this.userGraphicsModel.getMarkers();
-        markers.add(buildUserMarker(41.00656363088295, -91.95743432800263, "1980 San Marco Blvd, Jacksonville, FL 32207"));
-        markers.add(buildUserMarker(41.007535185596815, -91.96245542327866, "1650 Margaret St, Jacksonville, FL 32204"));
-        markers.add(buildUserMarker(41.00662840164286, -91.96764817993162, "7153 Philips Hwy, Jacksonville, FL 32256"));
-        markers.add(buildUserMarker(41.01284609816806, -91.96507325927725, "7153 Philips Hwy, Jacksonville, FL 32256"));
+        markers.add(buildUserMarker(41.00656363088295, -91.95743432800263, "1980 San Marco Blvd, Jacksonville, FL 32207", "Dhature"));
+        markers.add(buildUserMarker(41.007535185596815, -91.96245542327866, "1650 Margaret St, Jacksonville, FL 32204", "Pature"));
+        markers.add(buildUserMarker(41.00662840164286, -91.96764817993162, "7153 Philips Hwy, Jacksonville, FL 32256", "Lature"));
+        markers.add(buildUserMarker(41.01284609816806, -91.96507325927725, "1000 N 4th St., Fairfield, IA 52557", "Tori Laure"));
     }
 
-    private Marker buildUserMarker(double latitude, double longitude, String address) {
+    private Marker buildUserMarker(double latitude, double longitude, String address, String name) {
         Map<String, Object> attributes = new LinkedHashMap<String, Object>();
         attributes.put("Address", address);
-        attributes.put("Driver Name", "Harke");
+        attributes.put("Driver Name", name);
         attributes.put("Location", "Location");
         attributes.put("Phone No.", "987654321");
 
